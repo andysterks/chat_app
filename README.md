@@ -1,2 +1,2 @@
-# chat_app
+# Chat App
 Chat Application
