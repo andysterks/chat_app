@@ -1,9 +1,17 @@
 import './App.css';
-import ChatInterface from './ChatInterface'
+import ChatInterface from './Components/ChatInterface';
+import SignInForm from './Components/SignInForm';
+
+
 
 function App() {
   return (
-    <ChatInterface />
+    
+        <ChatInterface />,
+        <SignInForm />
+        
+   
+   
   );
 }
 

@@ -1,0 +1,87 @@
+html,
+body {
+  height: 100vh !important;
+}
+
+.container {
+  max-width: 100%;
+  /* width: 100%; */
+}
+
+.box {
+  border: solid;
+  border-color: rgb(103, 103, 103);
+}
+
+.userText {
+  color: whitesmoke;
+  font-family: "Anton", sans-serif;
+}
+
+.discussionText {
+  display: flex;
+  font-family: "Anton", sans-serif;
+  color: black align;
+}
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userBox {
+  background-color: #444c55;
+  height: 100vh;
+}
+
+.discussionBox {
+  background-color: rgb(225, 225, 225);
+  height: 100vh;
+  width: 100%;
+}
+
+.messageBox {
+  border: solid rgba(133, 133, 133, 0.3);
+  /* width: 100% !important; */
+  /* min-width: 100%; */
+  /* padding: 20px; */
+
+  /* margin-top: 87vh; */
+  resize: none;
+}
+
+.messageBox:focus,
+.messageBox:active {
+  border-color: #7fb395;
+}
+
+p {
+  /* font-family: "Poppins", sans-serif; */
+  font-size: 15px;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  /* margin-top: 32vh; */
+}
+
+.btn:focus,
+.btn:active {
+  outline: none !important;
+  -webkit-outline: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+.btn {
+  background-color: #7fb395 !important;
+}
+
+.parent {
+  display: flex;
+}
+
+.child {
+  align-self: flex-end;
+}
