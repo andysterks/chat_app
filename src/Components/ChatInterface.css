@@ -74,14 +74,15 @@ p {
 
 .btn:focus,
 .btn:active {
-  outline: none !important;
-  -webkit-outline: none !important;
+  background-color: #e8874a !important;
   box-shadow: none !important;
   -webkit-box-shadow: none !important;
 }
 
 .btn {
   background-color: #7fb395 !important;
+  outline: none !important;
+  border: none !important;
 }
 
 .parent {
@@ -95,9 +96,32 @@ p {
 }
 
 .chat-container {
-  width: 48px;
-  height: 48px;
-  -webkit-border-radius: 30px;
-  -moz-border-radius: 30px;
-  border-radius: 30px;
+  margin-top: 20px;
+  background: rgba(68, 76, 85, 0.7);
+  border-radius: 2em !important;
+  backdrop-filter: blur(15px);
+  /* border: 2px solid rgba(255, 255, 255, 0.5); */
+  background-clip: padding-box;
+  box-shadow: 10px 10px 10px rgba(68, 60, 46, 0.3);
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 200px;
+  max-width: 600px;
+  height: fit-content;
+  color: whitesmoke;
+  text-align: left;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+@media only screen and (min-height: 1500px) {
+  .logoutBtn {
+    margin-top: 72rem !important;
+  }
+}
+
+a {
+  width: 90px;
 }
