@@ -38,11 +38,15 @@ body {
 }
 
 .discussionBox {
-  position: relative;
+  /* position: relative; */
   background-color: rgb(225, 225, 225);
   text-align: center;
   justify-content: center;
   align-content: center;
+  width: 75vw;
+  overflow-wrap: break-word;
+  height: 95vh;
+  overflow-y: scroll;
 }
 
 .messageBox {
@@ -101,6 +105,7 @@ p {
   box-shadow: 10px 10px 10px rgba(68, 60, 46, 0.3);
   overflow-wrap: break-word;
   word-wrap: break-word;
+  min-width: 200px;
   max-width: 600px;
   width: fit-content;
   height: fit-content;
