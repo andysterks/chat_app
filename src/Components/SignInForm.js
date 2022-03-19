@@ -17,7 +17,7 @@ const SignInForm = () => {
              <form className="p-3 mt-3 text-center">
                <div className="form-field d-flex align-items-center"> <span> <img className="userIcon" alt="userIcon" src={userIcon}/> </span> <input type="text" name="userName" id="userName" placeholder="Username"></input></div>
                <div className="form-field d-flex align-items-center"> <span><img className="pwdIcon" alt="pwdIcon" src={pwdIcon}/></span> <input type="password" name="password" id="password" placeholder="Password"></input></div>
-               <Button className="btn mt-3 p-2" as={Link} to="chat">Login</Button>
+               <Button className="btn mt-3 p-2 loginBtn" as={Link} to="chat">Login</Button>
                 </form>
                 <div className="text-center fs-6 p-3"> Not a member? <a href="#">Sign Up</a></div>
                 {/* <div className="text-center p-2" style={{fontSize: "13px"}}> <a href="#">Forgot Password</a></div> */}

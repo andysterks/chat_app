@@ -17,11 +17,6 @@ body {
   display: flex;
 }
 
-.box {
-  border: solid;
-  border-color: rgb(103, 103, 103);
-}
-
 .userText {
   color: whitesmoke;
   font-family: "Poppins", sans-serif;
@@ -44,22 +39,22 @@ body {
 
 .discussionBox {
   position: relative;
-  /* background-color: rgb(225, 225, 225); */
-  /* width: 200px;
-  height: 200px; */
+  background-color: rgb(225, 225, 225);
   text-align: center;
   justify-content: center;
   align-content: center;
 }
 
 .messageBox {
-  border: solid rgba(133, 133, 133, 0.3);
+  /* border: solid rgba(133, 133, 133, 0.3) !important; */
   resize: none;
 }
 
 .messageBox:focus,
 .messageBox:active {
-  border-color: #7fb395;
+  outline: none !important;
+  border-color: #ffcb8f !important;
+  box-shadow: 0 0 5px #ffcb8f !important;
 }
 
 p {
@@ -73,8 +68,9 @@ p {
 }
 
 .btn:focus,
-.btn:active {
-  background-color: #e8874a !important;
+.btn:active,
+.btn:hover {
+  background-color: #e45437 !important;
   box-shadow: none !important;
   -webkit-box-shadow: none !important;
 }
@@ -93,20 +89,20 @@ p {
 .child {
   position: absolute;
   align-self: flex-end;
+  /* bottom: 0; */
 }
 
 .chat-container {
-  margin-top: 20px;
+  margin: 40px;
   background: rgba(68, 76, 85, 0.7);
   border-radius: 2em !important;
   backdrop-filter: blur(15px);
-  /* border: 2px solid rgba(255, 255, 255, 0.5); */
   background-clip: padding-box;
   box-shadow: 10px 10px 10px rgba(68, 60, 46, 0.3);
   overflow-wrap: break-word;
   word-wrap: break-word;
-  min-width: 200px;
   max-width: 600px;
+  width: fit-content;
   height: fit-content;
   color: whitesmoke;
   text-align: left;
@@ -118,10 +114,27 @@ p {
 
 @media only screen and (min-height: 1500px) {
   .logoutBtn {
-    margin-top: 72rem !important;
+    margin-top: 66rem !important;
   }
 }
 
 a {
   width: 90px;
+}
+
+#navbar {
+  background-color: #444c55;
+  text-align: center;
+  color: whitesmoke;
+  display: table;
+  position: absolute;
+  vertical-align: middle;
+  width: 100%;
+  z-index: 1;
+  padding-left: 23%;
+}
+
+.sendBtn:active,
+.sendBtn:focus {
+  background-color: #7fb395 !important;
 }
