@@ -102,8 +102,9 @@ const ChatInterface = () => {
         </div>
 
         <div className="userBox col-3 userText">
-          <p className="text-center p-3 mt-2">Active Users</p>
-          <p className="text-center ">Topics</p>
+          <h6 className="text-center p-3 mt-2 pb-1">Active Users</h6>
+          <p className="text-center">User</p>
+          <h6 className="text-center p-3">Topics</h6>
           <Button
             className="p-2 d-flex justify-content-center align-items-center mx-auto mb-4"
             autoFocus="True"
