@@ -98,7 +98,7 @@ def getSingleMessageConnection(messageId):
     return records
 
 
-def createMessageConnection(userId, text):
+def createMessageConnection(userId, text, topic):
     connection = psycopg2.connect(
         host="localhost",
         port="5432",
@@ -107,7 +107,28 @@ def createMessageConnection(userId, text):
         password=password,
     )
     cursor = connection.cursor()
-    cursor.execute(f"INSERT INTO messages (userid, text) VALUES ('{userId}', '{text}')")
+    cursor.execute(f"INSERT INTO messages (userid, text) VALUES ('{userId}', '{text}', '{topic}')")
     connection.commit()
     cursor.close()
     connection.close()
+
+
+def getMessagesByTopicConnection(topic):
+   
+
+    connection = psycopg2.connect(
+        host="localhost",
+        port="5432",
+        database="chat_app",
+        user="postgres",
+        password=password,
+    )
+ 
+    cursor = connection.cursor()
+    cursor.execute(f"SELECT * FROM messages time_created, to_char (time_created, 'HH:MI PM') WHERE topic='{topic}'")
+    columns = cursor.description
+    records = [
+        {columns[index][0]: column for index, column in enumerate(value)}
+        for value in cursor.fetchall()
+    ]
+    return records

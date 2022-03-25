@@ -22,5 +22,9 @@ def getSingleMessage(messageId):
     return getSingleMessageConnection(messageId)
 
 
-def createMessage(userId, text):
-    return createMessageConnection(userId, text)
+def createMessage(userId, text, topic):
+    return createMessageConnection(userId, text, topic)
+
+
+def getMessagesByTopic(topic):
+    return getMessagesByTopicConnection(topic)

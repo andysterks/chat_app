@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "./build/static/css/main.aa3987dd.css",
-    "main.js": "./build/static/js/main.e10de0e7.js",
+    "main.js": "./build/static/js/main.5b051a43.js",
     "static/media/chat-app-icon.png": "./build/static/media/chat-app-icon.c3e434a07077d0d4914f.png",
     "index.html": "./build/index.html",
     "main.aa3987dd.css.map": "./build/static/css/main.aa3987dd.css.map",
-    "main.e10de0e7.js.map": "./build/static/js/main.e10de0e7.js.map"
+    "main.5b051a43.js.map": "./build/static/js/main.5b051a43.js.map"
   },
   "entrypoints": [
     "static/css/main.aa3987dd.css",
-    "static/js/main.e10de0e7.js"
+    "static/js/main.5b051a43.js"
   ]
 }

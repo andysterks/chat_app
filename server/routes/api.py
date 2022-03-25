@@ -18,8 +18,9 @@ class Message(Resource):
         req_data = request.get_json()
         userId = req_data["userId"]
         text = req_data["text"]
+        topic = req_data["topic"]
 
-        return jsonify(createMessage(userId, text))
+        return jsonify(createMessage(userId, text, topic))
 
 
 @api.route("/users")
@@ -42,7 +43,13 @@ class GetSingleUser(Resource):
         return jsonify(getSingleUser(id))
 
 
-@api.route("/messages/<messageId>")
-class GetSingleMessage(Resource):
-    def get(self, messageId):
-        return jsonify(getSingleMessage(messageId))
+# @api.route("/messages/<messageId>")
+# class GetSingleMessage(Resource):
+#     def get(self, messageId):
+#         return jsonify(getSingleMessage(messageId))
+
+
+@api.route("/messages/<topic>")
+class GetMessagesByTopic(Resource):
+    def get(self, topic):
+        return jsonify(getMessagesByTopic(topic))

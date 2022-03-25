@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import "./ChatInterface.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const ChatInterface = () => {
   window.setTimeout(function () {
@@ -9,70 +10,67 @@ const ChatInterface = () => {
     element.scrollTop = element.scrollHeight;
   });
 
-  const topicChange = (id) => {
-    let topicBox = document.getElementById(id);
-    setTopic(topicBox.id);
-  };
+  // const setTopic = (id) => {
+  //   let topicBox = document.getElementById(id);
+  //   setTopic(topicBox.id);
+  // };
 
   const [topic, setTopic] = useState("General");
 
-  const [messages, setMessages] = useState([
-    {
-      text: "Some say that our lives are defined by the sum of our choices.\
-    But it isn’t really our choices that distinguish who we are. \
-    It’s our commitment to them.",
-      user: { id: "2", name: "Emily Thorne" },
-    },
-    {
-      text: "Wow...that's a little deep for an early morning, is it not? 😅",
-      user: { id: "1", name: "You" },
-    },
-    {
-      text: "@Emily - Babe, calm down! 😩",
-      user: { id: "3", name: "Jack Porter" },
-    },
-    {
-      text: "Confucius once said, 'Before you embark on a journey of revenge, dig two graves",
-      user: { id: "2", name: "Emily Thorne" },
-    },
-    {
-      text: "Your blood sugar sounds low, let's get breakfast at the Stowaway!",
-      user: { id: "1", name: "You" },
-    },
-    {
-      text: "@Emily - We agreed, no revenge before breakfast!",
-      user: { id: "3", name: "Jack Porter" },
-    },
-  ]);
+  const [messages, setMessages] = useState([]);
+
+  const [users, setUsers] = useState([]);
+
+  const getUserInfo = (user_id) => {
+    return users.find((user) => user.id === user_id )
+  };
+
+  async function getMessages() {
+    await axios.get(`api/messages/${topic}`).then((res) => {
+      setMessages(res.data);
+      // console.log(res.data);
+     
+    });
+  }
+  async function getUsers() {
+    await axios.get("api/users").then((res) => {
+      setUsers(res.data);
+      // console.log(res.data);
+    });
+  }
+
+
+  const data = messages.map((message) => {
+    return {
+      ...message,
+      user: getUserInfo(message.userid),
+    };
+  });
+
+ 
 
   const send = () => {
     let message = document.getElementById("messageBox");
-    const newMessage = { text: message.value, user: { id: "1", name: "You" } };
-    setMessages([...messages, newMessage]);
+    const newMessage = { text: message.value, user: { id: "1", name: "CrystalW" } };
+    setMessages([...data, newMessage]);
     message.value = "";
   };
 
-  function displayTime() {
-    const date = new Date();
-    const hours = date.getHours().toString().padStart(2, 0);
-    const newHour = (hours % 12 || 12).toString();
-    const minutes = date.getMinutes().toString().padStart(2, 0);
+  
 
-    const amPM = hours < "12" || hours === "24" ? "AM" : "PM";
-
-    return `${newHour}:${minutes} ${amPM}`;
-  }
-
-  let theTime = displayTime();
+  useEffect(() => {
+    getMessages();
+    getUsers();
+  },[topic]);
 
   const theMessages =
-    messages &&
-    messages.map((message, index) => {
+    data &&
+    data.map((message, index) => {
       return (
         <div
           className="chat-container"
           style={
-            message.user.name === "You"
+            message.user?.username === "CrystalW"
               ? { background: "#e45437" }
               : { background: "" }
           }
@@ -82,9 +80,9 @@ const ChatInterface = () => {
             className="card-header d-flex justify-content-between p-3"
             style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.3" }}
           >
-            <p className="fw-bold mb-0">{message?.user.name}</p>
+            <p className="fw-bold mb-0">{message?.user?.username}</p>
             <p className=" small mb-0">
-              <i>{theTime}</i>
+              <i>{message?.to_char}</i>
             </p>
           </div>
           <div className="card-body">
@@ -110,7 +108,9 @@ const ChatInterface = () => {
             autoFocus="True"
             id="General"
             onClick={(e) => {
-              topicChange(e.target.id);
+              setTopic(e.target.id);
+              // getMessages();
+             
             }}
           >
             General
@@ -119,7 +119,8 @@ const ChatInterface = () => {
             className="p-2 d-flex text-center mx-auto mb-4"
             id="Art"
             onClick={(e) => {
-              topicChange(e.target.id);
+              setTopic(e.target.id);
+              // getMessages();
             }}
           >
             Art
@@ -128,7 +129,9 @@ const ChatInterface = () => {
             className="p-2 d-flex text-center mx-auto mb-4"
             id="Film & TV"
             onClick={(e) => {
-              topicChange(e.target.id);
+              setTopic(e.target.id);
+              // getMessages();
+              
             }}
           >
             Film & TV
@@ -137,7 +140,9 @@ const ChatInterface = () => {
             className="p-2 d-flex text-center mx-auto mb-4"
             id="Music"
             onClick={(e) => {
-              topicChange(e.target.id);
+              setTopic(e.target.id);
+              // getMessages();
+              
             }}
           >
             Music
@@ -146,7 +151,8 @@ const ChatInterface = () => {
             className="p-2 d-flex text-center mx-auto mb-5"
             id="Sports"
             onClick={(e) => {
-              topicChange(e.target.id);
+              setTopic(e.target.id);
+              // getMessages();
             }}
           >
             Sports
@@ -163,6 +169,7 @@ const ChatInterface = () => {
 
         <div className="parent">
           <div className="discussionBox" id="chatBox">
+            <p className="pt-5">The Date</p>
             {theMessages}
           </div>
 
