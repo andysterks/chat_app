@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import "./ChatInterface.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import useToken from "./useToken";
 
 const ChatInterface = () => {
   window.setTimeout(function () {
@@ -10,16 +11,16 @@ const ChatInterface = () => {
     element.scrollTop = element.scrollHeight;
   });
 
-  // const setTopic = (id) => {
-  //   let topicBox = document.getElementById(id);
-  //   setTopic(topicBox.id);
-  // };
-
   const [topic, setTopic] = useState("General");
 
   const [messages, setMessages] = useState([]);
 
   const [users, setUsers] = useState([]);
+
+  const {removeToken} = useToken();
+
+  let navigate = useNavigate()
+  
 
   const getUserInfo = (user_id) => {
     return users.find((user) => user.id === user_id )
@@ -38,6 +39,29 @@ const ChatInterface = () => {
       // console.log(res.data);
     });
   }
+
+
+const logOut = () => {
+
+  axios
+  .post("/api/logout", data, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  })
+  .then(( res ) => {
+    removeToken()
+    navigate("/")
+    window.location.reload()
+    
+  })
+  .catch((error) => {
+    console.log("An error was caught!", error);
+  });
+}
+
+  
 
 
   const data = messages.map((message) => {
@@ -109,7 +133,7 @@ const ChatInterface = () => {
             id="General"
             onClick={(e) => {
               setTopic(e.target.id);
-              // getMessages();
+              
              
             }}
           >
@@ -120,7 +144,7 @@ const ChatInterface = () => {
             id="Art"
             onClick={(e) => {
               setTopic(e.target.id);
-              // getMessages();
+             
             }}
           >
             Art
@@ -130,7 +154,7 @@ const ChatInterface = () => {
             id="Film & TV"
             onClick={(e) => {
               setTopic(e.target.id);
-              // getMessages();
+              
               
             }}
           >
@@ -141,7 +165,7 @@ const ChatInterface = () => {
             id="Music"
             onClick={(e) => {
               setTopic(e.target.id);
-              // getMessages();
+           
               
             }}
           >
@@ -152,7 +176,7 @@ const ChatInterface = () => {
             id="Sports"
             onClick={(e) => {
               setTopic(e.target.id);
-              // getMessages();
+              
             }}
           >
             Sports
@@ -160,8 +184,7 @@ const ChatInterface = () => {
 
           <Button
             className="p-3 d-flex text-center mx-auto logoutBtn"
-            as={Link}
-            to="/"
+            onClick={logOut}
           >
             Logout
           </Button>

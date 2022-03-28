@@ -6,17 +6,16 @@ import axios from "axios";
 import chatIcon from "../img/chat-app-icon.png";
 import userIcon from "../img/userIcon.png";
 import pwdIcon from "../img/passwordIcon.png";
-import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { Button, NavItem } from "react-bootstrap";
+
+//Look into UseNaviate hook
 
 const SignInForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // const [loginForm, setLoginForm] = useState({
-  //   username: '',
-  //   password: ''
-  // });
+  let navigate = useNavigate()
 
   const handleClick = () => {
     const data = {
@@ -25,23 +24,28 @@ const SignInForm = () => {
     };
 
     axios
-      .post("http://localhost:5000/api/token", data, {
+      .post("/api/token", data, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
       })
-      .then(({ res }) => {
-        console.log({ res }.status);
-        return { res }.json;
+      .then(( res ) => {
+    
+        return res 
       })
-      .then((data) => {
-        console.log("This came from the backend", data);
-        sessionStorage.setItem("token", data.access_token);
+      .then((res) => {
+        
+        localStorage.setItem("token", res.data.access_token);
+        navigate('/chat')
+        window.location.reload()
       })
       .catch((error) => {
-        console.log("An error was caught!", error);
+        console.log("There was an error!", error);
       });
+
+     
+  
   };
 
   return (
