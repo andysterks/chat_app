@@ -1,21 +1,23 @@
 import React from "react";
 import "./SignInForm.css";
-import "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 import chatIcon from "../img/chat-app-icon.png";
 import userIcon from "../img/userIcon.png";
 import pwdIcon from "../img/passwordIcon.png";
 import { useNavigate } from "react-router-dom";
-import { Button, NavItem } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
-//Look into UseNaviate hook
 
 const SignInForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  let isPasswordShown = useState(false);
+  let wrongDetails = useState(false);
 
-  let navigate = useNavigate()
+  let navigate = useNavigate();
 
   const handleClick = () => {
     const data = {
@@ -30,22 +32,17 @@ const SignInForm = () => {
           "Content-Type": "application/json",
         },
       })
-      .then(( res ) => {
-    
-        return res 
+      .then((res) => {
+        return res;
       })
       .then((res) => {
-        
         localStorage.setItem("token", res.data.access_token);
-        navigate('/chat')
-        window.location.reload()
+        navigate("/chat");
+        window.location.reload();
       })
       .catch((error) => {
         console.log("There was an error!", error);
       });
-
-     
-  
   };
 
   return (
@@ -78,19 +75,30 @@ const SignInForm = () => {
           <input
             type="password"
             name="password"
+            className="fa-eye icon"
             id="password"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
+            onKeyUp={(e) => {
+              if (e.key == "Enter") {
+                handleClick();
+              }
+            }}
             value={password}
           ></input>
+          <span className="passwordIcon">
+            <FontAwesomeIcon icon={faEye} />
+          </span>
         </div>
         <Button className="btn mt-3 p-2 loginBtn" onClick={handleClick}>
           Login
         </Button>
       </form>
+
       <div className="text-center fs-6 p-3">
         {" "}
         Not a member? <a href="#">Sign Up</a>
+        <FontAwesomeIcon icon="fa-regular fa-eye" />
       </div>
       {/* <div className="text-center p-2" style={{fontSize: "13px"}}> <a href="#">Forgot Password</a></div> */}
       {/* <div className="text-center fs-6"> Or <a href="#">Continue as Guest</a></div> */}

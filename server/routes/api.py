@@ -1,15 +1,13 @@
+import json
 from flask import request, Blueprint, jsonify
 from flask_restx import Api, Resource
 import hashlib
 from server.data import *
-from flask_jwt_extended import create_access_token, unset_jwt_cookies,\
-    jwt_required
+from flask_jwt_extended import create_access_token, unset_jwt_cookies, jwt_required
 
 
 api_blueprint = Blueprint("api", __name__, url_prefix="/api")
 api = Api(api_blueprint)
-
-
 
 
 @api.route("/messages")
@@ -61,22 +59,21 @@ class GetMessagesByTopic(Resource):
         return jsonify(getMessagesByTopic(topic))
 
 
-
-
-
 @api.route("/token", methods=["POST"])
 class CreateToken(Resource):
     def post(self):
-        
+
         req_data = request.get_json()
         username = req_data["username"]
         password = req_data["password"]
-        if username != "test" or password != "test":
-            return {"msg": "Username or password incorrect"}, 401
 
-        access_token = create_access_token(identity=username)
-        response = {"access_token":access_token}
-        return response
+        for i in checkUser(username):
+            if i["username"] == username and i["password"] == password:
+                access_token = create_access_token(identity=username)
+                response = {"access_token": access_token}
+                return response
+
+        return {"msg": "Username or password incorrect"}, 401
 
 
 @api.route("/logout", methods=["POST"])

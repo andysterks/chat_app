@@ -28,3 +28,7 @@ def createMessage(userId, text, topic):
 
 def getMessagesByTopic(topic):
     return getMessagesByTopicConnection(topic)
+
+
+def checkUser(username): 
+    return checkUserConnection(username)

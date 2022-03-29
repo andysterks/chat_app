@@ -132,3 +132,23 @@ def getMessagesByTopicConnection(topic):
         for value in cursor.fetchall()
     ]
     return records
+
+
+
+def checkUserConnection(username):
+
+    connection = psycopg2.connect(
+        host="localhost",
+        port="5432",
+        database="chat_app",
+        user="postgres",
+        password=password,
+    )
+    cursor = connection.cursor()
+    cursor.execute(f"SELECT username, password FROM users WHERE username='{username}'")
+    columns = cursor.description
+    records = [
+        {columns[index][0]: column for index, column in enumerate(value)}
+        for value in cursor.fetchall()
+    ]
+    return records

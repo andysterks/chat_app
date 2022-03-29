@@ -38,10 +38,8 @@ def serve(path):
    
     return send_from_directory(app.static_folder, 'index.html')
 
-# @app.route('/chat')
-# def Hello():
-    
-#     return "Hello World"
+
+
   
 
 

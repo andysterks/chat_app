@@ -90,3 +90,9 @@ body {
   color: whitesmoke !important;
   background-color: #e45437 !important;
 }
+
+.passwordIcon {
+  margin-left: -50px;
+  opacity: 50%;
+  margin-top: 2px;
+}
