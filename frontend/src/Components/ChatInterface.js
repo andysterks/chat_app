@@ -33,12 +33,12 @@ const ChatInterface = () => {
      
     });
   }
-  // async function getUsers() {
-  //   await axios.get("api/users").then((res) => {
-  //     setUsers(res.data);
-  //     // console.log(res.data);
-  //   });
-  // }
+  async function getUsers() {
+    await axios.get("api/users").then((res) => {
+      setUsers(res.data);
+      // console.log(res.data);
+    });
+  }
 
 
 const logOut = () => {
@@ -84,7 +84,7 @@ const logOut = () => {
 
   useEffect(() => {
     getMessages();
-    // getUsers();
+    getUsers();
   },[topic]);
 
   const theMessages =

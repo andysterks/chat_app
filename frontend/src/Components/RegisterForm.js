@@ -10,11 +10,12 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
-const SignInForm = () => {
+const RegisterForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordShown, setPasswordShown] = useState(false);
+  const [fullPassword, setFullPassword] = useState(true);
   const [wrongDetails, setWrongDetails] = useState(false);
+  const [passwordShown, setPasswordShown] = useState(false);
 
   let navigate = useNavigate();
 
@@ -22,12 +23,7 @@ const SignInForm = () => {
     setPasswordShown(!passwordShown);
   };
 
-  const handleClick = () => {
-    const data = {
-      username: username,
-      password: password,
-    };
-
+  const pushToken = (data) => {
     axios
       .post("/api/token", data, {
         headers: {
@@ -45,9 +41,38 @@ const SignInForm = () => {
       })
       .catch((error) => {
         console.log("There was an error!", error);
-        setWrongDetails(true);
-        console.log(wrongDetails);
       });
+  };
+
+  const handleClick = () => {
+    const data = {
+      username: username,
+      password: password,
+    };
+
+    if (username.length >= 4 && password.length >= 4) {
+      axios
+        .post("/api/users", data, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          return res;
+        })
+        .then((res) => {
+          pushToken(data);
+          navigate("/chat");
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log("There was an error!", error);
+          setWrongDetails(true);
+        });
+    } else {
+      setFullPassword(false);
+    }
   };
 
   return (
@@ -55,10 +80,17 @@ const SignInForm = () => {
       <div className="text-center pa-3">
         <img src={chatIcon} className="chatIcon" alt="chat-icon"></img>
       </div>
-      <div className="text-center mt4 name">Sign in to ChatSpace</div>
+      <div className="text-center mt4 name">Sign Up for ChatSpace</div>
+      {!fullPassword ? (
+        <p className="text-center mt-4 wrongDetails">
+          Username and/or password must be at least 4 characters
+        </p>
+      ) : (
+        ""
+      )}
       {wrongDetails ? (
         <p className="text-center mt-4 wrongDetails">
-          Please enter a valid username and/or password
+          Username is already taken. Please choose another.
         </p>
       ) : (
         ""
@@ -75,6 +107,7 @@ const SignInForm = () => {
             name="userName"
             id="userName"
             placeholder="Username"
+            minlength="4"
             onChange={(e) => setUsername(e.target.value)}
             value={username}
           ></input>
@@ -89,6 +122,8 @@ const SignInForm = () => {
             name="password"
             id="password"
             placeholder="Password"
+            minlength="4"
+            maxLength="15"
             onChange={(e) => setPassword(e.target.value)}
             onKeyUp={(e) => {
               if (e.key == "Enter") {
@@ -97,7 +132,7 @@ const SignInForm = () => {
             }}
             value={password}
           ></input>
-          <span className="passwordEyeIcon">
+          <span className="passwordIcon">
             <FontAwesomeIcon
               icon={passwordShown ? faEye : faEyeSlash}
               onClick={togglePasswordVisibility}
@@ -105,17 +140,16 @@ const SignInForm = () => {
           </span>
         </div>
         <Button className="btn mt-3 p-2 loginBtn" onClick={handleClick}>
-          Login
+          Register
         </Button>
       </form>
 
       <div className="text-center fs-6 p-3">
         {" "}
-        Not a member? <a href="/register">Sign Up</a>
+        Already a member? <a href="/">Log In</a>
       </div>
-      {/* <div className="text-center p-2" style={{fontSize: "13px"}}> <a href="#">Forgot Password</a></div> */}
     </div>
   );
 };
 
-export default SignInForm;
+export default RegisterForm;

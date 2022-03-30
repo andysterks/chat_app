@@ -1,30 +1,36 @@
 import "./App.css";
 import ChatInterface from "./Components/ChatInterface";
 import SignInForm from "./Components/SignInForm";
+import RegisterForm from "./Components/RegisterForm";
 import useToken from "./Components/useToken";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState } from "react";
 
 function App() {
   const { token, setToken } = useToken();
-  
+
   return (
     <div>
       <Router>
-        {!token && token !== "" && token !== undefined ? (
-          <SignInForm />
-        ) : (
-          <>
-            <Routes>
+        <Routes>
+          {!token && token !== "" && token !== undefined ? (
+            <>
+              <Route path="/" element={<SignInForm />} />
+              <Route path="/register" element={<RegisterForm />} />
+              <Route path="/chat" element={<SignInForm />} />
+            </>
+          ) : (
+            <>
+
               <Route
-                exact
                 path="/chat"
                 setToken={setToken}
                 element={<ChatInterface />}
               />
-            </Routes>
-          </>
-        )}
+              <Route path="/" element={<SignInForm />} />
+            </>
+          )}
+        </Routes>
       </Router>
     </div>
   );
