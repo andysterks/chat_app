@@ -17,52 +17,43 @@ const ChatInterface = () => {
 
   const [users, setUsers] = useState([]);
 
-  const {removeToken} = useToken();
+  const { removeToken } = useToken();
 
-  let navigate = useNavigate()
-  
+  let navigate = useNavigate();
 
   const getUserInfo = (user_id) => {
-    return users.find((user) => user.id === user_id )
+    return users.find((user) => user.id === user_id);
   };
 
   async function getMessages() {
     await axios.get(`api/messages/${topic}`).then((res) => {
       setMessages(res.data);
       // console.log(res.data);
-     
     });
   }
   async function getUsers() {
     await axios.get("api/users").then((res) => {
       setUsers(res.data);
-      // console.log(res.data);
     });
   }
 
-
-const logOut = () => {
-
-  axios
-  .post("/api/logout", data, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  })
-  .then(( res ) => {
-    removeToken()
-    navigate("/")
-    window.location.reload()
-    
-  })
-  .catch((error) => {
-    console.log("An error was caught!", error);
-  });
-}
-
-  
-
+  const logOut = () => {
+    axios
+      .post("/api/logout", data, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        removeToken();
+        navigate("/");
+        window.location.reload()
+      })
+      .catch((error) => {
+        console.log("An error was caught!", error);
+      });
+  };
 
   const data = messages.map((message) => {
     return {
@@ -71,21 +62,39 @@ const logOut = () => {
     };
   });
 
- 
-
-  const send = () => {
+  const databaseSend = () => {
     let message = document.getElementById("messageBox");
-    const newMessage = { text: message.value, user: { id: "1", name: "CrystalW" } };
-    setMessages([...data, newMessage]);
-    message.value = "";
-  };
+    let newText = message.value.replaceAll("'", "''");
 
-  
+    const data = {
+      userId: 1,
+      text: newText,
+      topic: topic,
+    };
+
+    axios
+      .post("/api/messages", data, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        return res;
+      })
+      .then((res) => {
+        getMessages();
+        message.value = "";
+      })
+      .catch((error) => {
+        console.log("There was an error!", error);
+      });
+  };
 
   useEffect(() => {
     getMessages();
     getUsers();
-  },[topic]);
+  }, [topic]);
 
   const theMessages =
     data &&
@@ -133,8 +142,6 @@ const logOut = () => {
             id="General"
             onClick={(e) => {
               setTopic(e.target.id);
-              
-             
             }}
           >
             General
@@ -144,7 +151,6 @@ const logOut = () => {
             id="Art"
             onClick={(e) => {
               setTopic(e.target.id);
-             
             }}
           >
             Art
@@ -154,8 +160,6 @@ const logOut = () => {
             id="Film & TV"
             onClick={(e) => {
               setTopic(e.target.id);
-              
-              
             }}
           >
             Film & TV
@@ -165,8 +169,6 @@ const logOut = () => {
             id="Music"
             onClick={(e) => {
               setTopic(e.target.id);
-           
-              
             }}
           >
             Music
@@ -176,7 +178,6 @@ const logOut = () => {
             id="Sports"
             onClick={(e) => {
               setTopic(e.target.id);
-              
             }}
           >
             Sports
@@ -208,13 +209,17 @@ const logOut = () => {
                   placeholder="Type Your Message"
                   onKeyUp={(e) => {
                     if (e.key === "Enter") {
-                      send();
+                      databaseSend();
                     }
                   }}
                 />
               </div>
             </div>
-            <Button type="submit" className="btn sendBtn" onClick={send}>
+            <Button
+              type="submit"
+              className="btn sendBtn"
+              onClick={databaseSend}
+            >
               SEND
             </Button>
           </div>

@@ -14,7 +14,7 @@ def getUsersConnection():
         password=password,
     )
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM users")
+    cursor.execute("SELECT username, id FROM users")
     columns = cursor.description
     records = [
         {columns[index][0]: column for index, column in enumerate(value)}
@@ -51,7 +51,7 @@ def getSingleUserConnection(id):
         password=password,
     )
     cursor = connection.cursor()
-    cursor.execute(f"SELECT * FROM users WHERE Id={id}")
+    cursor.execute(f"SELECT username,id FROM users WHERE Id={id}")
     columns = cursor.description
     records = [
         {columns[index][0]: column for index, column in enumerate(value)}
@@ -107,7 +107,7 @@ def createMessageConnection(userId, text, topic):
         password=password,
     )
     cursor = connection.cursor()
-    cursor.execute(f"INSERT INTO messages (userid, text) VALUES ('{userId}', '{text}', '{topic}')")
+    cursor.execute(f"INSERT INTO messages (userid, text, topic) VALUES ('{userId}', '{text}', '{topic}')")
     connection.commit()
     cursor.close()
     connection.close()

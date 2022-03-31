@@ -1,7 +1,7 @@
 import React from "react";
 import "./SignInForm.css";
 import { Button } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import chatIcon from "../img/chat-app-icon.png";
 import userIcon from "../img/userIcon.png";
@@ -9,6 +9,7 @@ import pwdIcon from "../img/passwordIcon.png";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
 
 const SignInForm = () => {
   const [username, setUsername] = useState("");
@@ -46,7 +47,6 @@ const SignInForm = () => {
       .catch((error) => {
         console.log("There was an error!", error);
         setWrongDetails(true);
-        console.log(wrongDetails);
       });
   };
 

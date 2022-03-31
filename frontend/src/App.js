@@ -8,6 +8,7 @@ import { useState } from "react";
 
 function App() {
   const { token, setToken } = useToken();
+  // const [signedInUser, setSignedInUser] = useState("test");
 
   return (
     <div>
@@ -15,13 +16,15 @@ function App() {
         <Routes>
           {!token && token !== "" && token !== undefined ? (
             <>
-              <Route path="/" element={<SignInForm />} />
+              <Route
+                path="/"
+                element={<SignInForm />}
+              />
               <Route path="/register" element={<RegisterForm />} />
               <Route path="/chat" element={<SignInForm />} />
             </>
           ) : (
             <>
-
               <Route
                 path="/chat"
                 setToken={setToken}

@@ -23,7 +23,7 @@ class Message(Resource):
         text = req_data["text"]
         topic = req_data["topic"]
 
-        return jsonify(createMessage(userId, text, topic))
+        return createMessage(userId, text, topic)
 
 
 @api.route("/users")
@@ -54,7 +54,6 @@ class GetSingleUser(Resource):
 
 @api.route("/messages/<topic>")
 class GetMessagesByTopic(Resource):
-    # @jwt_required()
     def get(self, topic):
         return jsonify(getMessagesByTopic(topic))
 

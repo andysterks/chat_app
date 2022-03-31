@@ -4,13 +4,14 @@ from flask_restx import Api, Resource
 from datetime import date, datetime, timedelta
 import os
 from flask_jwt_extended import JWTManager, get_jwt, get_jwt_identity, create_access_token, \
-    unset_jwt_cookies, jwt_required
+    verify_jwt_in_request
 from pytz import timezone
 import json
 
 app = create_app()
 
 app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET")
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(app)
 
 @app.after_request
@@ -19,7 +20,7 @@ def refresh_expiring_jwts(response):
         exp_timestamp = get_jwt()["exp"]
         now = datetime.utcnow()
         target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
-        if target_timestamp > exp_timestamp:
+        if target_timestamp > exp_timestamp: 
             access_token = create_access_token(identity=get_jwt_identity())
             data = response.get_json()
             if type(data) is dict:
@@ -37,6 +38,9 @@ def refresh_expiring_jwts(response):
 def serve(path):
    
     return send_from_directory(app.static_folder, 'index.html')
+
+
+
 
 
 

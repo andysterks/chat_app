@@ -23,7 +23,7 @@ const RegisterForm = () => {
     setPasswordShown(!passwordShown);
   };
 
-  const pushToken = (data) => {
+  const pushToken = (data) => { 
     axios
       .post("/api/token", data, {
         headers: {
