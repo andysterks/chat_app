@@ -143,3 +143,8 @@ a {
 .sendBtn:focus {
   background-color: #7fb395 !important;
 }
+
+.activeUser{
+  color: #ffcb8f !important;
+  font-weight: 900;
+}

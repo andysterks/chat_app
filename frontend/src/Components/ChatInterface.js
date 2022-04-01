@@ -4,6 +4,7 @@ import "./ChatInterface.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import useToken from "./useToken";
+import useUser from "./useUser";
 
 const ChatInterface = () => {
   window.setTimeout(function () {
@@ -19,10 +20,22 @@ const ChatInterface = () => {
 
   const { removeToken } = useToken();
 
+  const { signedInUser, signOutUser } = useUser();
+
   let navigate = useNavigate();
 
   const getUserInfo = (user_id) => {
     return users.find((user) => user.id === user_id);
+  };
+
+  const selectSignedInUser = (signedInUser) => {
+    let theUserId;
+    users.find((user) => {
+      if (user.username === signedInUser) {
+        theUserId = user.id;
+      }
+    });
+    return theUserId;
   };
 
   async function getMessages() {
@@ -47,8 +60,9 @@ const ChatInterface = () => {
       })
       .then((res) => {
         removeToken();
+        signOutUser();
         navigate("/");
-        window.location.reload()
+        window.location.reload();
       })
       .catch((error) => {
         console.log("An error was caught!", error);
@@ -62,12 +76,14 @@ const ChatInterface = () => {
     };
   });
 
+  let userId = selectSignedInUser(signedInUser);
+
   const databaseSend = () => {
     let message = document.getElementById("messageBox");
     let newText = message.value.replaceAll("'", "''");
 
     const data = {
-      userId: 1,
+      userId: userId,
       text: newText,
       topic: topic,
     };
@@ -87,6 +103,8 @@ const ChatInterface = () => {
         message.value = "";
       })
       .catch((error) => {
+        console.log(data.userId);
+        console.log(data);
         console.log("There was an error!", error);
       });
   };
@@ -103,7 +121,7 @@ const ChatInterface = () => {
         <div
           className="chat-container"
           style={
-            message.user?.username === "CrystalW"
+            message.user?.username === signedInUser
               ? { background: "#e45437" }
               : { background: "" }
           }
@@ -134,7 +152,9 @@ const ChatInterface = () => {
 
         <div className="userBox col-3 userText">
           <h6 className="text-center p-3 mt-2 pb-1">Active Users</h6>
-          <p className="text-center">User</p>
+          <p className="text-center font-weight-bold activeUser">
+            {signedInUser} <br></br>
+          </p>
           <h6 className="text-center p-3">Topics</h6>
           <Button
             className="p-2 d-flex justify-content-center align-items-center mx-auto mb-4"

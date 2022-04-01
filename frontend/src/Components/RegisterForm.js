@@ -132,7 +132,7 @@ const RegisterForm = () => {
             }}
             value={password}
           ></input>
-          <span className="passwordIcon">
+          <span className="passwordEyeIcon">
             <FontAwesomeIcon
               icon={passwordShown ? faEye : faEyeSlash}
               onClick={togglePasswordVisibility}

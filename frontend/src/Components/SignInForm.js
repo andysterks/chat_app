@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./SignInForm.css";
 import { Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
@@ -9,7 +9,6 @@ import pwdIcon from "../img/passwordIcon.png";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-
 
 const SignInForm = () => {
   const [username, setUsername] = useState("");
@@ -41,6 +40,7 @@ const SignInForm = () => {
       })
       .then((res) => {
         localStorage.setItem("token", res.data.access_token);
+        localStorage.setItem("user", username);
         navigate("/chat");
         window.location.reload();
       })
