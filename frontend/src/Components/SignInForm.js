@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./SignInForm.css";
 import { Button } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import chatIcon from "../img/chat-app-icon.png";
 import userIcon from "../img/userIcon.png";
@@ -91,7 +91,7 @@ const SignInForm = () => {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
             onKeyUp={(e) => {
-              if (e.key == "Enter") {
+              if (e.key === "Enter") {
                 handleClick();
               }
             }}

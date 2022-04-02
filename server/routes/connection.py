@@ -68,9 +68,13 @@ def getMessagesConnection():
         user="postgres",
         password=password,
     )
+
+    formattedTime = "Formatted_Time"
+    formattedDate = "Formatted_Date"
+
     cursor = connection.cursor()
     cursor.execute(
-        "SELECT * FROM messages time_created, to_char (time_created, 'HH:MI PM')"
+       f"SELECT *, to_char (time_created, 'HH:MI PM') AS {formattedTime}, to_char (createddate, 'MM/DD/YY') AS {formattedDate} FROM messages"
     )
     columns = cursor.description
     records = [
@@ -123,9 +127,11 @@ def getMessagesByTopicConnection(topic):
         user="postgres",
         password=password,
     )
- 
+    formattedTime = "Formatted_Time"
+    formattedDate = "Formatted_Date"
+
     cursor = connection.cursor()
-    cursor.execute(f"SELECT * FROM messages time_created, to_char (time_created, 'HH:MI PM') WHERE topic='{topic}'")
+    cursor.execute(f"SELECT *, to_char (time_created, 'HH:MI PM') AS {formattedTime}, to_char (createddate, 'Day, Month fmDDth, YYYY') AS {formattedDate} FROM messages WHERE topic='{topic}'")
     columns = cursor.description
     records = [
         {columns[index][0]: column for index, column in enumerate(value)}

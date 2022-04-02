@@ -148,3 +148,11 @@ a {
   color: #ffcb8f !important;
   font-weight: 900;
 }
+
+.horizontalLine{
+background-color: black;
+opacity: 5%;
+height: 2px;
+width: auto
+}
+

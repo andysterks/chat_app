@@ -103,8 +103,6 @@ const ChatInterface = () => {
         message.value = "";
       })
       .catch((error) => {
-        console.log(data.userId);
-        console.log(data);
         console.log("There was an error!", error);
       });
   };
@@ -117,27 +115,41 @@ const ChatInterface = () => {
   const theMessages =
     data &&
     data.map((message, index) => {
+      let prev = data[index - 1];
+      let current = data[index];
+
       return (
-        <div
-          className="chat-container"
-          style={
-            message.user?.username === signedInUser
-              ? { background: "#e45437" }
-              : { background: "" }
-          }
-          key={index}
-        >
+        <div>
+          {prev?.formatted_date === current?.formatted_date ? (
+            ""
+          ) : (
+            <div>
+              <div className="fw-bold mx-auto horizontalLine"></div>
+              <div className="fw-bold mt-4" style={{color: "#444c55"}}>{message?.formatted_date}</div>
+            </div>
+          )}
+
           <div
-            className="card-header d-flex justify-content-between p-3"
-            style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.3" }}
+            className="chat-container"
+            style={
+              message.user?.username === signedInUser
+                ? { background: "#e45437" }
+                : { background: "" }
+            }
+            key={index}
           >
-            <p className="fw-bold mb-0">{message?.user?.username}</p>
-            <p className=" small mb-0">
-              <i>{message?.to_char}</i>
-            </p>
-          </div>
-          <div className="card-body">
-            <p className="mb-0 mx-auto p-2">{message.text}</p>
+            <div
+              className="card-header d-flex justify-content-between p-3"
+              style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.3" }}
+            >
+              <p className="fw-bold mb-0">{message?.user?.username}</p>
+              <p className=" small mb-0">
+                <i>{message?.formatted_time}</i>
+              </p>
+            </div>
+            <div className="card-body">
+              <p className="mb-0 mx-auto p-2">{message.text}</p>
+            </div>
           </div>
         </div>
       );
@@ -213,7 +225,6 @@ const ChatInterface = () => {
 
         <div className="parent">
           <div className="discussionBox" id="chatBox">
-            <p className="pt-5">The Date</p>
             {theMessages}
           </div>
 

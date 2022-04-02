@@ -126,7 +126,7 @@ const RegisterForm = () => {
             maxLength="15"
             onChange={(e) => setPassword(e.target.value)}
             onKeyUp={(e) => {
-              if (e.key == "Enter") {
+              if (e.key === "Enter") {
                 handleClick();
               }
             }}
