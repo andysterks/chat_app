@@ -1,7 +1,7 @@
 import json
+import bcrypt
 from flask import request, Blueprint, jsonify
 from flask_restx import Api, Resource
-import hashlib
 from server.data import *
 from flask_jwt_extended import create_access_token, unset_jwt_cookies, jwt_required
 
@@ -67,7 +67,9 @@ class CreateToken(Resource):
         password = req_data["password"]
 
         for i in checkUser(username):
-            if i["username"] == username and i["password"] == password:
+            if i["username"] == username and bcrypt.checkpw(
+                password.encode(), i["password"].encode()
+            ):
                 access_token = create_access_token(identity=username)
                 response = {"access_token": access_token}
                 return response

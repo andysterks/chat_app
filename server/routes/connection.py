@@ -1,5 +1,7 @@
 import os
 import psycopg2
+import bcrypt
+
 
 password = os.environ.get("PASSWORD")
 
@@ -32,9 +34,12 @@ def createUserConnection(username, password):
         user="postgres",
         password=password,
     )
+    
+    hashedPassword = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+    stringedHashedPassword = hashedPassword.decode()
     cursor = connection.cursor()
     cursor.execute(
-        f"INSERT INTO users (username, password) VALUES ('{username}', '{password}')"
+        f"INSERT INTO users (username, password) VALUES ('{username}', '{stringedHashedPassword}')"
     )
     connection.commit()
     cursor.close()
@@ -74,7 +79,7 @@ def getMessagesConnection():
 
     cursor = connection.cursor()
     cursor.execute(
-       f"SELECT *, to_char (time_created, 'HH:MI PM') AS {formattedTime}, to_char (createddate, 'MM/DD/YY') AS {formattedDate} FROM messages"
+       f"SELECT *, to_char (time_created, 'HH:MI PM') AS {formattedTime}, to_char (createddate, 'MM/DD/YY') AS {formattedDate} FROM messages ORDER BY {formattedDate} ASC"
     )
     columns = cursor.description
     records = [
@@ -131,7 +136,7 @@ def getMessagesByTopicConnection(topic):
     formattedDate = "Formatted_Date"
 
     cursor = connection.cursor()
-    cursor.execute(f"SELECT *, to_char (time_created, 'HH:MI PM') AS {formattedTime}, to_char (createddate, 'Day, Month fmDDth, YYYY') AS {formattedDate} FROM messages WHERE topic='{topic}'")
+    cursor.execute(f"SELECT *, to_char (time_created, 'fmHH:MI PM') AS {formattedTime}, to_char (createddate, 'Day, Month fmDDth, YYYY') AS {formattedDate} FROM messages WHERE topic='{topic}' ORDER BY messageid ASC")
     columns = cursor.description
     records = [
         {columns[index][0]: column for index, column in enumerate(value)}
@@ -158,3 +163,4 @@ def checkUserConnection(username):
         for value in cursor.fetchall()
     ]
     return records
+

@@ -41,7 +41,6 @@ const ChatInterface = () => {
   async function getMessages() {
     await axios.get(`api/messages/${topic}`).then((res) => {
       setMessages(res.data);
-      // console.log(res.data);
     });
   }
   async function getUsers() {
@@ -125,7 +124,9 @@ const ChatInterface = () => {
           ) : (
             <div>
               <div className="fw-bold mx-auto horizontalLine"></div>
-              <div className="fw-bold mt-4" style={{color: "#444c55"}}>{message?.formatted_date}</div>
+              <div className="fw-bold mt-4" style={{ color: "#444c55" }}>
+                {message?.formatted_date}
+              </div>
             </div>
           )}
 
@@ -169,7 +170,11 @@ const ChatInterface = () => {
           </p>
           <h6 className="text-center p-3">Topics</h6>
           <Button
-            className="p-2 d-flex justify-content-center align-items-center mx-auto mb-4"
+            className={
+              topic === "General"
+                ? "p-2 d-flex justify-content-center align-items-center mx-auto mb-4 activeButton"
+                : "p-2 d-flex justify-content-center align-items-center mx-auto mb-4"
+            }
             autoFocus="True"
             id="General"
             onClick={(e) => {
@@ -179,7 +184,11 @@ const ChatInterface = () => {
             General
           </Button>
           <Button
-            className="p-2 d-flex text-center mx-auto mb-4"
+            className={
+              topic === "Art"
+                ? "p-2 d-flex justify-content-center align-items-center mx-auto mb-4 activeButton"
+                : "p-2 d-flex justify-content-center align-items-center mx-auto mb-4"
+            }
             id="Art"
             onClick={(e) => {
               setTopic(e.target.id);
@@ -188,7 +197,11 @@ const ChatInterface = () => {
             Art
           </Button>
           <Button
-            className="p-2 d-flex text-center mx-auto mb-4"
+            className={
+              topic === "Film & TV"
+                ? "p-2 d-flex justify-content-center align-items-center mx-auto mb-4 activeButton"
+                : "p-2 d-flex justify-content-center align-items-center mx-auto mb-4"
+            }
             id="Film & TV"
             onClick={(e) => {
               setTopic(e.target.id);
@@ -197,7 +210,11 @@ const ChatInterface = () => {
             Film & TV
           </Button>
           <Button
-            className="p-2 d-flex text-center mx-auto mb-4"
+            className={
+              topic === "Music"
+                ? "p-2 d-flex justify-content-center align-items-center mx-auto mb-4 activeButton"
+                : "p-2 d-flex justify-content-center align-items-center mx-auto mb-4"
+            }
             id="Music"
             onClick={(e) => {
               setTopic(e.target.id);
@@ -206,7 +223,11 @@ const ChatInterface = () => {
             Music
           </Button>
           <Button
-            className="p-2 d-flex text-center mx-auto mb-5"
+            className={
+              topic === "Sports"
+                ? "p-2 d-flex justify-content-center align-items-center mx-auto mb-4 activeButton"
+                : "p-2 d-flex justify-content-center align-items-center mx-auto mb-4"
+            }
             id="Sports"
             onClick={(e) => {
               setTopic(e.target.id);
