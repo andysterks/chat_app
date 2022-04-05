@@ -38,7 +38,6 @@ body {
 }
 
 .discussionBox {
-  /* position: relative; */
   background-color: rgb(225, 225, 225);
   text-align: center;
   justify-content: center;
@@ -50,7 +49,6 @@ body {
 }
 
 .messageBox {
-  /* border: solid rgba(133, 133, 133, 0.3) !important; */
   resize: none;
 }
 
@@ -145,7 +143,7 @@ a {
 }
 
 .activeUser{
-  color: #ffcb8f !important;
+  color: #f6ad92 !important;
   font-weight: 900;
 }
 

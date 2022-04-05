@@ -1,9 +1,9 @@
 import json
-import bcrypt
 from flask import request, Blueprint, jsonify
 from flask_restx import Api, Resource
 from server.data import *
 from flask_jwt_extended import create_access_token, unset_jwt_cookies, jwt_required
+import bcrypt
 
 
 api_blueprint = Blueprint("api", __name__, url_prefix="/api")
@@ -44,12 +44,6 @@ class GetSingleUser(Resource):
     def get(self, id):
 
         return jsonify(getSingleUser(id))
-
-
-# @api.route("/messages/<messageId>")
-# class GetSingleMessage(Resource):
-#     def get(self, messageId):
-#         return jsonify(getSingleMessage(messageId))
 
 
 @api.route("/messages/<topic>")

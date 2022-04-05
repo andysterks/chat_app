@@ -59,12 +59,10 @@ const RegisterForm = () => {
           },
         })
         .then((res) => {
-          return res;
+          return res
         })
         .then((res) => {
           pushToken(data);
-          navigate("/chat");
-          window.location.reload();
         })
         .catch((error) => {
           console.log("There was an error!", error);
