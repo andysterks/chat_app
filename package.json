@@ -1,0 +1,21 @@
+{
+  "name": "chat_app",
+  "version": "1.0.0",
+  "description": "Chat application that stores users and persists message data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm start",
+    "heroku-postbuild": "npm install --prefix frontend && npm run build --prefix frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cheyjax116/chat_app.git"
+  },
+  "author": "crystalword",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cheyjax116/chat_app/issues"
+  },
+  "homepage": "https://github.com/cheyjax116/chat_app#readme"
+}

@@ -1,5 +1,5 @@
-from flask import Flask, send_from_directory
-from . import create_app
+from flask import send_from_directory
+from __init__ import create_app
 from flask_restx import Api, Resource
 from datetime import date, datetime, timedelta
 import os
