@@ -14,6 +14,7 @@ def getUsersConnection():
         database="dfohmf7phrnrjp",
         user="tpemykhqhjpokb",
         password=password,
+        sslmode="require"
     )
     cursor = connection.cursor()
     cursor.execute("SELECT username, id FROM users")
@@ -33,6 +34,7 @@ def createUserConnection(username, password):
         database="dfohmf7phrnrjp",
         user="tpemykhqhjpokb",
         password=password,
+        sslmode="require"
     )
     
     hashedPassword = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
@@ -54,6 +56,7 @@ def getSingleUserConnection(id):
         database="dfohmf7phrnrjp",
         user="tpemykhqhjpokb",
         password=password,
+        sslmode="require"
     )
     cursor = connection.cursor()
     cursor.execute(f"SELECT username,id FROM users WHERE Id={id}")
@@ -72,6 +75,7 @@ def getMessagesConnection():
         database="dfohmf7phrnrjp",
         user="tpemykhqhjpokb",
         password=password,
+        sslmode="require"
     )
 
     formattedTime = "Formatted_Time"
@@ -96,6 +100,7 @@ def getSingleMessageConnection(messageId):
         database="dfohmf7phrnrjp",
         user="tpemykhqhjpokb",
         password=password,
+        sslmode="require"
     )
     cursor = connection.cursor()
     cursor.execute(f"SELECT * FROM messages WHERE messageid={messageId}")
@@ -114,6 +119,7 @@ def createMessageConnection(userId, text, topic):
         database="dfohmf7phrnrjp",
         user="tpemykhqhjpokb",
         password=password,
+        sslmode="require"
     )
     cursor = connection.cursor()
     cursor.execute(f"INSERT INTO messages (userid, text, topic) VALUES ('{userId}', '{text}', '{topic}')")
@@ -131,6 +137,7 @@ def getMessagesByTopicConnection(topic):
         database="dfohmf7phrnrjp",
         user="tpemykhqhjpokb",
         password=password,
+        sslmode="require"
     )
     formattedTime = "Formatted_Time"
     formattedDate = "Formatted_Date"
@@ -154,6 +161,7 @@ def checkUserConnection(username):
         database="dfohmf7phrnrjp",
         user="tpemykhqhjpokb",
         password=password,
+        sslmode="require"
     )
     cursor = connection.cursor()
     cursor.execute(f"SELECT username, password FROM users WHERE username='{username}'")
