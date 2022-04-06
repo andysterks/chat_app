@@ -9,10 +9,10 @@ password = os.environ.get("PASSWORD")
 def getUsersConnection():
 
     connection = psycopg2.connect(
-        host="localhost",
+        host="ec2-52-71-69-66.compute-1.amazonaws.com",
         port="5432",
-        database="chat_app",
-        user="postgres",
+        database="dfohmf7phrnrjp",
+        user="tpemykhqhjpokb",
         password=password,
     )
     cursor = connection.cursor()
@@ -28,10 +28,10 @@ def getUsersConnection():
 def createUserConnection(username, password):
 
     connection = psycopg2.connect(
-        host="localhost",
+        host="ec2-52-71-69-66.compute-1.amazonaws.com",
         port="5432",
-        database="chat_app",
-        user="postgres",
+        database="dfohmf7phrnrjp",
+        user="tpemykhqhjpokb",
         password=password,
     )
     
@@ -49,10 +49,10 @@ def createUserConnection(username, password):
 def getSingleUserConnection(id):
 
     connection = psycopg2.connect(
-        host="localhost",
+        host="ec2-52-71-69-66.compute-1.amazonaws.com",
         port="5432",
-        database="chat_app",
-        user="postgres",
+        database="dfohmf7phrnrjp",
+        user="tpemykhqhjpokb",
         password=password,
     )
     cursor = connection.cursor()
@@ -67,10 +67,10 @@ def getSingleUserConnection(id):
 
 def getMessagesConnection():
     connection = psycopg2.connect(
-        host="localhost",
+        host="ec2-52-71-69-66.compute-1.amazonaws.com",
         port="5432",
-        database="chat_app",
-        user="postgres",
+        database="dfohmf7phrnrjp",
+        user="tpemykhqhjpokb",
         password=password,
     )
 
@@ -91,10 +91,10 @@ def getMessagesConnection():
 
 def getSingleMessageConnection(messageId):
     connection = psycopg2.connect(
-        host="localhost",
+        host="ec2-52-71-69-66.compute-1.amazonaws.com",
         port="5432",
-        database="chat_app",
-        user="postgres",
+        database="dfohmf7phrnrjp",
+        user="tpemykhqhjpokb",
         password=password,
     )
     cursor = connection.cursor()
@@ -109,10 +109,10 @@ def getSingleMessageConnection(messageId):
 
 def createMessageConnection(userId, text, topic):
     connection = psycopg2.connect(
-        host="localhost",
+        host="ec2-52-71-69-66.compute-1.amazonaws.com",
         port="5432",
-        database="chat_app",
-        user="postgres",
+        database="dfohmf7phrnrjp",
+        user="tpemykhqhjpokb",
         password=password,
     )
     cursor = connection.cursor()
@@ -126,10 +126,10 @@ def getMessagesByTopicConnection(topic):
    
 
     connection = psycopg2.connect(
-        host="localhost",
+        host="ec2-52-71-69-66.compute-1.amazonaws.com",
         port="5432",
-        database="chat_app",
-        user="postgres",
+        database="dfohmf7phrnrjp",
+        user="tpemykhqhjpokb",
         password=password,
     )
     formattedTime = "Formatted_Time"
@@ -149,10 +149,10 @@ def getMessagesByTopicConnection(topic):
 def checkUserConnection(username):
 
     connection = psycopg2.connect(
-        host="localhost",
+        host="ec2-52-71-69-66.compute-1.amazonaws.com",
         port="5432",
-        database="chat_app",
-        user="postgres",
+        database="dfohmf7phrnrjp",
+        user="tpemykhqhjpokb",
         password=password,
     )
     cursor = connection.cursor()
