@@ -14,6 +14,7 @@ import json
 
 app = create_app()
 
+# app.config"SQLALCHEMY_DATABASE_URI") = os.environ.get("DATABASE_URL")
 app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET")
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(app)

@@ -12,10 +12,12 @@ def getUsersConnection():
         host="ec2-52-71-69-66.compute-1.amazonaws.com",
         port="5432",
         database="dfohmf7phrnrjp",
-        user="tpemykhqhjpokb",
+        # user="tpemykhqhjpokb",
         password=password,
         sslmode="require"
+        
     )
+    print(password)
     cursor = connection.cursor()
     cursor.execute("SELECT username, id FROM users")
     columns = cursor.description
