@@ -38,6 +38,7 @@ const RegisterForm = () => {
         localStorage.setItem("token", res.data.access_token);
         navigate("/chat");
         window.location.reload();
+        
       })
       .catch((error) => {
         console.log("There was an error!", error);
@@ -63,6 +64,7 @@ const RegisterForm = () => {
         })
         .then((res) => {
           pushToken(data);
+          localStorage.setItem("user", username);
         })
         .catch((error) => {
           console.log("There was an error!", error);

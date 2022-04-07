@@ -111,6 +111,11 @@ const ChatInterface = () => {
     getUsers();
   }, [topic]);
 
+  const formatTime = (utcTime) => {
+    const time = new Date(utcTime);
+    return time.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  };
+
   const theMessages =
     data &&
     data.map((message, index) => {
@@ -145,7 +150,7 @@ const ChatInterface = () => {
             >
               <p className="fw-bold mb-0">{message?.user?.username}</p>
               <p className=" small mb-0">
-                <i>{message?.formatted_time}</i>
+                <i>{formatTime(message?.time_created)}</i>
               </p>
             </div>
             <div className="card-body">
