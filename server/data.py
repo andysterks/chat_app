@@ -32,3 +32,12 @@ def getMessagesByTopic(topic):
 
 def checkUser(username): 
     return checkUserConnection(username)
+
+def getActiveUsers(): 
+    return getActiveUsersConnection()
+
+def activateUser(username): 
+    return activateUserConnection(username)
+
+def deactiveUser(username): 
+    return deactivateUserConnection(username)

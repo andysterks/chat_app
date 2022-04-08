@@ -36,6 +36,7 @@ const SignInForm = () => {
         },
       })
       .then((res) => {
+        console.log(res);
         return res;
       })
       .then((res) => {
@@ -47,6 +48,21 @@ const SignInForm = () => {
       .catch((error) => {
         console.log("There was an error!", error);
         setWrongDetails(true);
+      });
+
+    axios
+      .post("api/activateuser", data, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
+      .catch((error) => {
+        console.log("There was an error!", error);
       });
   };
 
@@ -113,7 +129,6 @@ const SignInForm = () => {
         {" "}
         Not a member? <a href="/register">Sign Up</a>
       </div>
-      {/* <div className="text-center p-2" style={{fontSize: "13px"}}> <a href="#">Forgot Password</a></div> */}
     </div>
   );
 };

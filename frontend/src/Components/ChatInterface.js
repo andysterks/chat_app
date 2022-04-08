@@ -22,6 +22,8 @@ const ChatInterface = () => {
 
   const { signedInUser, signOutUser } = useUser();
 
+  const [activeUsers, setActiveUsers] = useState([]);
+
   let navigate = useNavigate();
 
   const getUserInfo = (user_id) => {
@@ -49,24 +51,28 @@ const ChatInterface = () => {
     });
   }
 
-  const logOut = () => {
-    axios
-      .post("/api/logout", data, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        removeToken();
-        signOutUser();
-        navigate("/");
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.log("An error was caught!", error);
-      });
-  };
+  async function getActiveUsers() {
+    await axios.get("api/activeusers").then((res) => {
+      setActiveUsers(res.data);
+    });
+  }
+
+  const actives = activeUsers?.map((user) => {
+    return (
+      <table className="d-flex text-center justify-content-center align-items-center pb-2">
+        <td
+          style={
+            user?.username === signedInUser
+              ? { color: "#5cdb91" }
+              : { color: "#bafad4" }
+          }
+        >
+          {user?.username}
+        </td>
+        <br></br>
+      </table>
+    );
+  });
 
   const data = messages.map((message) => {
     return {
@@ -106,10 +112,49 @@ const ChatInterface = () => {
       });
   };
 
+  const logOut = () => {
+    axios
+      .post("/api/logout", data, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        removeToken();
+        signOutUser();
+        navigate("/");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log("An error was caught!", error);
+      });
+
+    const user = {
+      username: signedInUser,
+    };
+
+    axios
+      .post("api/deactivateuser", user, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
+      .catch((error) => {
+        console.log("There was an error!", error);
+      });
+  };
+
   useEffect(() => {
     getMessages();
     getUsers();
-  }, [topic]);
+    getActiveUsers();
+  }, [topic, activeUsers]);
 
   const formatTime = (utcTime) => {
     const time = new Date(utcTime);
@@ -170,9 +215,8 @@ const ChatInterface = () => {
 
         <div className="userBox col-3 userText">
           <h6 className="text-center p-3 mt-2 pb-1">Active Users</h6>
-          <p className="text-center font-weight-bold activeUser">
-            {signedInUser} <br></br>
-          </p>
+          <p className="text-center">{actives}</p>
+
           <h6 className="text-center p-3">Topics</h6>
           <Button
             className={

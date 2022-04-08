@@ -18,7 +18,7 @@ def getUsersConnection():
     )
 
     cursor = connection.cursor()
-    cursor.execute("SELECT username, id FROM users")
+    cursor.execute("SELECT username, id, signedIn FROM users")
     columns = cursor.description
     records = [
         {columns[index][0]: column for index, column in enumerate(value)}
@@ -142,7 +142,7 @@ def getMessagesByTopicConnection(topic):
         password=dbpassword,
         sslmode="require",
     )
-    
+
     formattedDate = "Formatted_Date"
 
     cursor = connection.cursor()
@@ -175,3 +175,60 @@ def checkUserConnection(username):
         for value in cursor.fetchall()
     ]
     return records
+
+
+def getActiveUsersConnection():
+
+    connection = psycopg2.connect(
+        host="ec2-52-71-69-66.compute-1.amazonaws.com",
+        port="5432",
+        database="dfohmf7phrnrjp",
+        user="tpemykhqhjpokb",
+        password=dbpassword,
+        sslmode="require",
+    )
+
+    cursor = connection.cursor()
+    cursor.execute(f"SELECT username from users where signedin='Yes'")
+    columns = cursor.description
+    records = [
+        {columns[index][0]: column for index, column in enumerate(value)}
+        for value in cursor.fetchall()
+    ]
+    return records
+
+
+def activateUserConnection(username):
+
+    connection = psycopg2.connect(
+        host="ec2-52-71-69-66.compute-1.amazonaws.com",
+        port="5432",
+        database="dfohmf7phrnrjp",
+        user="tpemykhqhjpokb",
+        password=dbpassword,
+        sslmode="require",
+    )
+
+    cursor = connection.cursor()
+    cursor.execute(f"update users set signedin='Yes' where username='{username}'")
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+
+def deactivateUserConnection(username):
+
+    connection = psycopg2.connect(
+        host="ec2-52-71-69-66.compute-1.amazonaws.com",
+        port="5432",
+        database="dfohmf7phrnrjp",
+        user="tpemykhqhjpokb",
+        password=dbpassword,
+        sslmode="require",
+    )
+
+    cursor = connection.cursor()
+    cursor.execute(f"update users set signedin='No' where username='{username}'")
+    connection.commit()
+    cursor.close()
+    connection.close()

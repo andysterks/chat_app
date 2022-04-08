@@ -142,16 +142,11 @@ a {
   background-color: #7fb395 !important;
 }
 
-.activeUser{
-  color: #f6ad92 !important;
-  font-weight: 900;
-}
-
-.horizontalLine{
-background-color: black;
-opacity: 5%;
-height: 2px;
-width: auto
+.horizontalLine {
+  background-color: black;
+  opacity: 5%;
+  height: 2px;
+  width: auto;
 }
 
 .activeButton {
