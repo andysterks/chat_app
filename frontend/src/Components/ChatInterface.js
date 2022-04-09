@@ -63,11 +63,13 @@ const ChatInterface = () => {
         <td
           style={
             user?.username === signedInUser
-              ? { color: "#5cdb91" }
+              ? { color: "#ffa861", fontWeight: "bold" }
               : { color: "#bafad4" }
           }
         >
-          {user?.username}
+          {user?.username === signedInUser
+            ? user?.username + " (You)"
+            : user?.username}
         </td>
         <br></br>
       </table>
@@ -154,7 +156,7 @@ const ChatInterface = () => {
     getMessages();
     getUsers();
     getActiveUsers();
-  }, [topic, activeUsers]);
+  }, [topic]);
 
   const formatTime = (utcTime) => {
     const time = new Date(utcTime);
@@ -208,7 +210,13 @@ const ChatInterface = () => {
 
   return (
     <>
-      <div id="container">
+      <div
+        id="container"
+        onFocus={() => {
+          getActiveUsers();
+          getMessages();
+        }}
+      >
         <div className="text-center mx-auto" id="navbar">
           {topic}
         </div>
@@ -307,6 +315,10 @@ const ChatInterface = () => {
                   className="form-control messageBox"
                   rows="2"
                   cols="500"
+                  onFocus={() => {
+                    getActiveUsers();
+                    getMessages();
+                  }}
                   placeholder="Type Your Message"
                   onKeyUp={(e) => {
                     if (e.key === "Enter") {
