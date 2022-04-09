@@ -320,6 +320,7 @@ const ChatInterface = () => {
                     getActiveUsers();
                     getMessages();
                   }}
+                  onChange={getMessages}
                   placeholder="Type Your Message"
                   onKeyUp={(e) => {
                     if (e.key === "Enter") {
