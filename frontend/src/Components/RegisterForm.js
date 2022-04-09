@@ -23,7 +23,7 @@ const RegisterForm = () => {
     setPasswordShown(!passwordShown);
   };
 
-  const pushToken = (data) => { 
+  const pushToken = (data) => {
     axios
       .post("/api/token", data, {
         headers: {
@@ -38,7 +38,6 @@ const RegisterForm = () => {
         localStorage.setItem("token", res.data.access_token);
         navigate("/chat");
         window.location.reload();
-        
       })
       .catch((error) => {
         console.log("There was an error!", error);
@@ -60,7 +59,7 @@ const RegisterForm = () => {
           },
         })
         .then((res) => {
-          return res
+          return res;
         })
         .then((res) => {
           pushToken(data);
@@ -69,6 +68,21 @@ const RegisterForm = () => {
         .catch((error) => {
           console.log("There was an error!", error);
           setWrongDetails(true);
+        });
+
+      axios
+        .post("api/activateuser", data, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          return res;
+        })
+        .catch((error) => {
+          console.log("There was an error!", error);
         });
     } else {
       setFullPassword(false);

@@ -216,6 +216,7 @@ const ChatInterface = () => {
           getActiveUsers();
           getMessages();
         }}
+        onClick={getActiveUsers}
       >
         <div className="text-center mx-auto" id="navbar">
           {topic}
