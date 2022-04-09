@@ -44,6 +44,24 @@ const RegisterForm = () => {
       });
   };
 
+  const activateUser = (data) => {
+    axios
+        .post("api/activateuser", data, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          return res;
+        })
+        .catch((error) => {
+          console.log("There was an error!", error);
+        });
+
+  }
+
   const handleClick = () => {
     const data = {
       username: username,
@@ -64,26 +82,14 @@ const RegisterForm = () => {
         .then((res) => {
           pushToken(data);
           localStorage.setItem("user", username);
+          activateUser(data)
         })
         .catch((error) => {
           console.log("There was an error!", error);
           setWrongDetails(true);
         });
 
-      axios
-        .post("api/activateuser", data, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          return res;
-        })
-        .catch((error) => {
-          console.log("There was an error!", error);
-        });
+      
     } else {
       setFullPassword(false);
     }
