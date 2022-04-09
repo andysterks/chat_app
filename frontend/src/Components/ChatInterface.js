@@ -107,6 +107,7 @@ const ChatInterface = () => {
       })
       .then((res) => {
         getMessages();
+        getActiveUsers()
         message.value = "";
       })
       .catch((error) => {
@@ -320,7 +321,10 @@ const ChatInterface = () => {
                     getActiveUsers();
                     getMessages();
                   }}
-                  onChange={getMessages}
+                  onChange={() => {
+                    getActiveUsers();
+                    getMessages();
+                  }}
                   placeholder="Type Your Message"
                   onKeyUp={(e) => {
                     if (e.key === "Enter") {
