@@ -5,12 +5,17 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import useToken from "./useToken";
 import useUser from "./useUser";
+import io from "socket.io-client"
 
 const ChatInterface = () => {
   window.setTimeout(function () {
     let element = document.getElementById("chatBox");
     element.scrollTop = element.scrollHeight;
   });
+
+  // const socket = io()
+  const socket = io.connect("http://localhost:5000")
+
 
   const [topic, setTopic] = useState("General");
 
@@ -23,6 +28,8 @@ const ChatInterface = () => {
   const { signedInUser, signOutUser } = useUser();
 
   const [activeUsers, setActiveUsers] = useState([]);
+
+  const [message, setMessage] = useState("");
 
   let navigate = useNavigate();
 
@@ -43,19 +50,39 @@ const ChatInterface = () => {
   async function getMessages() {
     await axios.get(`api/messages/${topic}`).then((res) => {
       setMessages(res.data);
+      
     });
-  }
+
+    };
+
+    // console.log(messages)
+
+  
+  // const getmoreMessages = () => {
+    
+  //   socket.on("message", msg => {
+  //     setMessages([...messages, msg]);
+  //     console.log(messages)
+  //   });
+
+  // }
+
+  
   async function getUsers() {
     await axios.get("api/users").then((res) => {
       setUsers(res.data);
     });
   }
 
+
+
   async function getActiveUsers() {
     await axios.get("api/activeusers").then((res) => {
       setActiveUsers(res.data);
     });
   }
+
+  
 
   const actives = activeUsers?.map((user) => {
     return (
@@ -86,8 +113,16 @@ const ChatInterface = () => {
   let userId = selectSignedInUser(signedInUser);
 
   const databaseSend = () => {
-    let message = document.getElementById("messageBox");
-    let newText = message.value.replaceAll("'", "''");
+    let messageBox = document.getElementById("messageBox");
+    let newText = message.replaceAll("'", "''");
+  
+
+    // if (message !== '') {
+    //   socket.emit("message", message);
+    //   setMessage("");
+
+    // } 
+    
 
     const data = {
       userId: userId,
@@ -106,9 +141,9 @@ const ChatInterface = () => {
         return res;
       })
       .then((res) => {
-        getMessages();
-        getActiveUsers()
-        message.value = "";
+        // getMessages();
+        // getActiveUsers()
+        messageBox.value = "";
       })
       .catch((error) => {
         console.log("There was an error!", error);
@@ -155,6 +190,15 @@ const ChatInterface = () => {
 
   useEffect(() => {
     getMessages();
+
+    
+    socket.on('new_message', (msg) => {
+      // setMessages((messages) => [...messages, msg])
+      console.log(msg)
+    } )
+    
+
+
     getUsers();
     getActiveUsers();
   }, [topic]);
@@ -163,6 +207,10 @@ const ChatInterface = () => {
     const time = new Date(utcTime);
     return time.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
   };
+
+
+
+
 
   const theMessages =
     data &&
@@ -213,11 +261,11 @@ const ChatInterface = () => {
     <>
       <div
         id="container"
-        onFocus={() => {
-          getActiveUsers();
-          getMessages();
-        }}
-        onClick={getActiveUsers}
+        // onFocus={() => {
+        //   getActiveUsers();
+        //   getMessages();
+        // }}
+        // onClick={getActiveUsers}
       >
         <div className="text-center mx-auto" id="navbar">
           {topic}
@@ -317,18 +365,23 @@ const ChatInterface = () => {
                   className="form-control messageBox"
                   rows="2"
                   cols="500"
-                  onFocus={() => {
-                    getActiveUsers();
-                    getMessages();
+                  // onFocus={() => {
+                  //   getActiveUsers();
+                  //   getMessages();
+                  // }}
+                  // onChange={() => {
+                  //   getActiveUsers();
+                  //   getMessages();
+                  // }}
+                  onChange={(e) => {
+                    setMessage(e.target.value)
                   }}
-                  onChange={() => {
-                    getActiveUsers();
-                    getMessages();
-                  }}
+                  value={message}
                   placeholder="Type Your Message"
                   onKeyUp={(e) => {
                     if (e.key === "Enter") {
                       databaseSend();
+
                     }
                   }}
                 />
@@ -338,6 +391,13 @@ const ChatInterface = () => {
               type="submit"
               className="btn sendBtn"
               onClick={databaseSend}
+              // onClick={() => {
+              //   if (message !== '') {
+              //     socket.emit("message", message);
+              //     setMessage("");
+        
+              //   } 
+              // }}
             >
               SEND
             </Button>

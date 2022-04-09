@@ -1,5 +1,10 @@
+from distutils.log import debug
+from socket import SocketIO, socket
 from flask import send_from_directory
-from __init__ import create_app
+import socketio
+
+# from __init__ import create_app
+from . import create_app, get_jwt 
 from flask_restx import Api, Resource
 from datetime import date, datetime, timedelta
 import os
@@ -10,14 +15,27 @@ from flask_jwt_extended import (
     create_access_token,
 )
 import json
+from flask_socketio import SocketIO, send
 
 
 app = create_app()
+jwt = get_jwt()
 
-# app.config"SQLALCHEMY_DATABASE_URI") = os.environ.get("DATABASE_URL")
-app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET")
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
-jwt = JWTManager(app)
+# socketio = SocketIO(app, cors_allowed_origins="*")
+
+# socketio.emit("new_message", {"text":"Hello"})
+
+
+# @socketio.on("message")
+# def handleMessage(msg):
+#     print("Message: " + msg)
+#     send(msg, broadcast=True)
+#     return None
+
+
+# @socketio.on("connect")
+# def handleConnect():
+#     print("connected now")
 
 
 @app.after_request
@@ -47,3 +65,4 @@ def serve(path):
 
 if __name__ == "__main__":
     app.run(debug=True)
+    # socketio.run(app, debug=True)
