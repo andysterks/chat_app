@@ -68,7 +68,7 @@ const RegisterForm = () => {
       password: password,
     };
 
-    if (username.length >= 4 && password.length >= 4) {
+    if (username.length >= 6 && password.length >= 6) {
       axios
         .post("/api/users", data, {
           headers: {
@@ -103,7 +103,7 @@ const RegisterForm = () => {
       <div className="text-center mt4 name">Sign Up for ChatSpace</div>
       {!fullPassword ? (
         <p className="text-center mt-4 wrongDetails">
-          Username and/or password must be at least 4 characters
+          Username and/or password must be at least 6 characters
         </p>
       ) : (
         ""
