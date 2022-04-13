@@ -1,1 +1,1 @@
-web: gunicorn --chdir server main:app
+web: gunicorn --bind 0.0.0.0:5001 --chdir server main:app
